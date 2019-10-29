@@ -1,11 +1,17 @@
 {
     "name": "xiaodi/think-pullword",
+    "description": "ThinkPHP 分词/抽词 扩展包",
     "license": "MIT",
     "authors": [
         {
             "name": "xiaodi",
             "email": "liangjinbiao@live.com"
         }
+    ],
+    "keywords": [
+        "php",
+        "thinkphp",
+        "think-extend"
     ],
     "minimum-stability": "dev",
     "require": {
