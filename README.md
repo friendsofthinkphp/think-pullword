@@ -6,7 +6,7 @@ ThinkPHP 分词/抽词 扩展包 `5.1` `6.0`
 
 ## 安装
 ```
-composer require xiaodi/think-pullword:dev-master
+composer require xiaodi/think-pullword
 ```
 
 ## 使用
@@ -68,7 +68,7 @@ class Index
 
 ```
 
-## 其它链式方法
+### 其它链式方法
 #### json返回
 ```php
 $source = '李彦宏是马云最大威胁嘛？';
