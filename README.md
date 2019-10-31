@@ -2,7 +2,9 @@
 ThinkPHP 分词/抽词 扩展包 `5.1` `6.0`
 
 [![Latest Stable Version](https://poser.pugx.org/xiaodi/think-pullword/version)](https://packagist.org/packages/xiaodi/think-pullword)
+[![Latest Unstable Version](https://poser.pugx.org/xiaodi/think-pullword/v/unstable)](https://packagist.org/packages/xiaodi/think-pullword)
 [![License](https://poser.pugx.org/xiaodi/think-pullword/license)](https://packagist.org/packages/xiaodi/think-pullword)
+[![Total Downloads](https://poser.pugx.org/xiaodi/think-pullword/downloads)](https://packagist.org/packages/xiaodi/think-pullword)
 
 ## 安装
 ```
