@@ -1,6 +1,8 @@
 # think-pullword
 ThinkPHP 分词/抽词 扩展包 `5.1` `6.0`
 
+使用梁厂的产品 http://www.pullword.com/
+
 [![Latest Stable Version](https://poser.pugx.org/xiaodi/think-pullword/version)](https://packagist.org/packages/xiaodi/think-pullword)
 [![Latest Unstable Version](https://poser.pugx.org/xiaodi/think-pullword/v/unstable)](https://packagist.org/packages/xiaodi/think-pullword)
 [![License](https://poser.pugx.org/xiaodi/think-pullword/license)](https://packagist.org/packages/xiaodi/think-pullword)
