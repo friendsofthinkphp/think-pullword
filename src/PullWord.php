@@ -3,7 +3,8 @@
 namespace PullWord;
 
 use GuzzleHttp\Client;
-use PullWord\Exception\Exception;
+use PullWord\Exception\HttpException;
+use PullWord\Exception\InvalidArgumentException;
 
 class PullWord
 {
@@ -21,7 +22,7 @@ class PullWord
 
     private $client;
 
-    const URI = 'http://api.pullword.com';
+    const URI = 'http://api.pullwords.com';
 
     public function __construct($source = '')
     {
@@ -39,7 +40,7 @@ class PullWord
      * 设置抽词内容
      *
      * @param [type] $source
-     * @return void
+     * @return $this
      */
     public function source($source)
     {
@@ -51,7 +52,7 @@ class PullWord
     /**
      * 结果返回json格式
      *
-     * @return void
+     * @return $this
      */
     public function toJson()
     {
@@ -62,7 +63,8 @@ class PullWord
     /**
      * 开启阈值
      * 出词概率阈值(0-1之间的小数)，1表示只有100%有把握的词才出
-     * @return void
+     * @param $value
+     * @return $this
      */
     public function threshold($value)
     {
@@ -70,10 +72,10 @@ class PullWord
         return $this;
     }
 
+
     /**
      * 开启调试模式
-     *
-     * @return void
+     * @return $this
      */
     public function debug()
     {
@@ -81,10 +83,16 @@ class PullWord
         return $this;
     }
 
+    /**
+     * 获取结果
+     * @return mixed
+     * @throws HttpException
+     * @throws InvalidArgumentException
+     */
     public function get()
     {
         if (!$this->source) {
-            throw new Exception("Source Empty!");
+            throw new InvalidArgumentException("Source Empty!");
         }
 
         $query = ['source' => $this->source, 'param1' => $this->threshold, 'param2' => $this->debug, 'json' => $this->json];
@@ -93,8 +101,8 @@ class PullWord
             $response = $this->client->get('/get.php', [
                 'query' => http_build_query($query)
             ]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
-            throw new Exception('服务异常');
+        } catch(\Exception $e) {
+            throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
 
         return $response->getBody()->getContents();
