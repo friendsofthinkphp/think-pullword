@@ -22,7 +22,7 @@ class PullWord
 
     private $client;
 
-    const URI = 'http://api.pullwords.com';
+    const URI = 'http://api.pullword.com';
 
     public function __construct($source = '')
     {
