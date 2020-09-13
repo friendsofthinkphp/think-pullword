@@ -21,10 +21,19 @@ class Index
 {
     public function index()
     {
-        $source = '李彦宏是马云最大威胁嘛？';
+        $source = '352净水器K10家用直饮大通量1000G 厨下RO反渗透纯水机';
         $pullWord = new PullWord($source);
-        $result = $pullWord->get();
-        // 结果 李彦 李彦宏 彦宏 马云 最大 大威 威胁
+        $result = $pullWord->pull()->toJson()->get();
+        // $result = $pullWord->service('pull', $source)->get();
+        // 结果 => string(169) "[{"t":"352净水器"},{"t":"净水器"},{"t":"家用"},{"t":"大通量"},{"t":"1000g"},{"t":"反渗透"},{"t":"反渗透纯水机"},{"t":"渗透"},{"t":"纯水机"}]
+
+
+        // 商品分类
+        // $source = '352净水器K10家用直饮大通量1000G 厨下RO反渗透纯水机';
+        // $pullWord = new PullWord($source);
+        // $result = $pullWord->classify()->get();
+        // // $result = $pullWord->service('classify', $source)->get();
+        // 结果 => string(27) "{"class":"电器","idx":11}"
     }
 }
 ```
@@ -36,9 +45,13 @@ class Index
 {
     public function index(PullWord $pullWord)
     {
-        $source = '李彦宏是马云最大威胁嘛？';
-        $result = $pullWord->source($source)->get();
+        $source = '352净水器K10家用直饮大通量1000G 厨下RO反渗透纯水机';
+        $result = $pullWord->pull($source)->get();
         var_dump($result);
+
+        // $source = '352净水器K10家用直饮大通量1000G 厨下RO反渗透纯水机';
+        // $result = $pullWord->classify($source)->get();
+        // var_dump($result);
     }
 }
 ```
@@ -51,8 +64,8 @@ class Index
 {
     public function index()
     {
-        $source = '李彦宏是马云最大威胁嘛？';
-        $result = PullWord::source($source)->get();
+        $source = '352净水器K10家用直饮大通量1000G 厨下RO反渗透纯水机';
+        $result = PullWord::pull($source')->get();
         var_dump($result);
     }
 }
@@ -64,8 +77,8 @@ class Index
 {
     public function index()
     {
-        $source = '李彦宏是马云最大威胁嘛？';
-        $result = app('pullword')->source($source)->get();
+        $source = '352净水器K10家用直饮大通量1000G 厨下RO反渗透纯水机';
+        $result = app('pullword')->pull($source)->get();
         var_dump($result);
     }
 }
@@ -75,22 +88,22 @@ class Index
 ### 其它链式方法
 #### json返回
 ```php
-$source = '李彦宏是马云最大威胁嘛？';
-PullWord::source($source)->toJson()->get();
-// 结果 [{"t":"李彦"},{"t":"李彦宏"},{"t":"彦宏"},{"t":"马云"},{"t":"最大"},{"t":"大威"},{"t":"威胁"}]
+$source = '352净水器K10家用直饮大通量1000G 厨下RO反渗透纯水机';
+PullWord::pull($source)->toJson()->get();
+// 结果 [{"t":"352净水器","p":"1"},{"t":"净水器","p":"1"},{"t":"家用","p":"1"},{"t":"大通量","p":"0.923331"},{"t":"1000g","p":"0.959741"},{"t":"反渗透","p":"0.944082"},{"t":"反渗透纯水机","p":"0.964588"},{"t":"渗透","p":"0.838643"},{"t":"纯水机","p":"0.928798"}]
 ```
 #### 调试模式
 结果含有出词概率
 ```php
-$source = '李彦宏是马云最大威胁嘛？';
-PullWord::source($source)->debug()->get();
-// 结果 李彦:0.23007 李彦宏:0.900302 彦宏:0.0703263 马云:1 最大:0.892363 大威:0.289136 威胁:0.9367
+$source = '352净水器K10家用直饮大通量1000G 厨下RO反渗透纯水机';
+PullWord::pull($source)->debug()->get();
+// 结果 [{"t":"352净水器","p":"1"},{"t":"净水器","p":"1"},{"t":"家用","p":"1"},{"t":"大通量","p":"0.923331"},{"t":"1000g","p":"0.959741"},{"t":"反渗透","p":"0.944082"},{"t":"反渗透纯水机","p":"0.964588"},{"t":"渗透","p":"0.838643"},{"t":"纯水机","p":"0.928798"}]
 ```
 
 #### 设置阈值
 出词概率阈值(0-1之间的小数)，1表示只有100%有把握的词才出
 ```php
-$source = '李彦宏是马云最大威胁嘛？';
-PullWord::source($source)->threshold(0.4)->get();
-// 结果 李彦宏 马云 最大 威胁
+$source = '352净水器K10家用直饮大通量1000G 厨下RO反渗透纯水机';
+PullWord::pull($source)->threshold(0.4)->toJson()->get();
+// 结果 [{"t":"352"},{"t":"352净水器"},{"t":"净水"},{"t":"净水器"},{"t":"家用"},{"t":"大通量"},{"t":"通量"},{"t":"1000g"},{"t":"反渗透"},{"t":"反渗透纯水机"},{"t":"渗透"},{"t":"纯水"},{"t":"纯水机"},{"t":"水机"}]
 ```
